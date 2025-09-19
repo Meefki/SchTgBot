@@ -1,16 +1,22 @@
-﻿using System.Globalization;
+﻿using Microsoft.Extensions.Configuration;
+using System.Globalization;
+using System.Text;
 using Telegram.Bot;
 using Telegram.Bot.Exceptions;
 using Telegram.Bot.Polling;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
-
-using System.Text;
 Console.OutputEncoding = Encoding.UTF8;
 Console.InputEncoding = Encoding.UTF8;
 
-var token = Environment.GetEnvironmentVariable("TELEGRAM_BOT_TOKEN")
-    ?? throw new Exception("Set TELEGRAM_BOT_TOKEN env var");
+IConfigurationRoot config = new ConfigurationBuilder()
+    .AddUserSecrets<Program>()
+    .Build();
+
+//var token = Environment.GetEnvironmentVariable("TELEGRAM_BOT_TOKEN")
+//    ?? throw new Exception("Set TELEGRAM_BOT_TOKEN env var");
+string token = config["TELEGRAM_BOT_TOKEN"]
+    ?? throw new Exception("Set TELEGRAM_BOT_TOKEN user secret");
 
 var bot = new TelegramBotClient(token);
 var me = await bot.GetMe();
