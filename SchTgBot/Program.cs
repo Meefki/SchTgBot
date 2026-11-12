@@ -84,6 +84,8 @@ async Task HandleUpdateAsync(ITelegramBotClient bot, Update update, Cancellation
         }
 
         // формируем варианты: Пн–Вс текущей недели с датами (даже если часть дней уже прошла)
+        TimeZoneInfo.ClearCachedData();
+        Environment.SetEnvironmentVariable("TZ", "Europe/Moscow");
         var options = BuildCurrentWeekOptions(DateTime.Now, weekOffset);
 
         // создаём опрос

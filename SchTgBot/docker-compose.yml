@@ -1,0 +1,24 @@
+
+services:
+  sch-tg-bot:
+    container_name: sch-tg-bot
+    image: sch-tg-bot:latest
+
+    platform: linux/arm64
+
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    restart: unless-stopped
+    init: true
+
+    environment:
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:?Telegram token is required}
+      TZ: Europe/Moscow
+
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
