@@ -10,11 +10,10 @@ Console.OutputEncoding = Encoding.UTF8;
 Console.InputEncoding = Encoding.UTF8;
 
 IConfigurationRoot config = new ConfigurationBuilder()
-    .AddUserSecrets<Program>()
+    .AddUserSecrets<Program>(optional: true)
+    .AddEnvironmentVariables()
     .Build();
 
-//var token = Environment.GetEnvironmentVariable("TELEGRAM_BOT_TOKEN")
-//    ?? throw new Exception("Set TELEGRAM_BOT_TOKEN env var");
 string token = config["TELEGRAM_BOT_TOKEN"]
     ?? throw new Exception("Set TELEGRAM_BOT_TOKEN user secret");
 
